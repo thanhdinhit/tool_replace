@@ -86,11 +86,36 @@ def compare_2_arr_and_get_new_filename(arr1_first, arr2_virtual):
         else:
             continue
     return check_diff
+
+def change_content_in_file(filename):
+    path_filename = f"{ROOT_APP}/{filename}.c"
+
+    # Read input file
+    with open(path_filename, "r") as file:
+        input_text = file.read()
+        
+    # Replace text after * @file and before .c
+    pattern = r'(?<=\* @file\s)(.*?)(?=\.c)'
+    output_text = re.sub(pattern, filename, input_text)
+    # Replace text after * @test_id
+    pattern = r'(?<=\* @test_id\s)(.*)'
+    output_text = re.sub(pattern, filename, output_text)
+
+    # Write output to file
+    with open(path_filename, "w") as file:
+        file.write(output_text)
+        print(f"Successfully renamed in {filename}.c'.")
+    
 def main():
     list_filename, list_number = get_all_filename_in_folder()
     list_number_virtual = list(create_arr_virtual(length_number=len(list_number)))
     get_diff = compare_2_arr_and_get_new_filename(list_number, list_number_virtual)
-    print(get_diff)
+    # print(get_diff)
+    
+    list_filename, list_number = get_all_filename_in_folder()
+    for i in range(len(list_filename)):
+        change_content_in_file(list_filename[i])
+    
 
 if __name__ == "__main__":
     main()
