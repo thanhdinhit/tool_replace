@@ -110,11 +110,13 @@ def main():
     list_filename, list_number = get_all_filename_in_folder()
     list_number_virtual = list(create_arr_virtual(length_number=len(list_number)))
     get_diff = compare_2_arr_and_get_new_filename(list_number, list_number_virtual)
-    # print(get_diff)
-    
-    list_filename, list_number = get_all_filename_in_folder()
-    for i in range(len(list_filename)):
-        change_content_in_file(list_filename[i])
+
+    if get_diff == 1:
+        list_filename, list_number = get_all_filename_in_folder()
+        for i in range(len(list_filename)):
+            change_content_in_file(list_filename[i])
+    else:
+        pass
     
 
 if __name__ == "__main__":
